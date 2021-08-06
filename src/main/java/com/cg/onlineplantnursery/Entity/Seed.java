@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -31,9 +34,11 @@ public class Seed {
 	private Integer seedId;
 	
 	@Column(name = "cname")
+	@NotBlank(message = "Seed common name must be inserted")
 	private String commonName;
 	
 	@Column(name = "bloomtime")
+	@NotBlank(message = "Bloom time must be specified")
 	private String bloomTime;
 	
 	private String watering;
@@ -44,18 +49,21 @@ public class Seed {
 	private String temparature;
 	
 	@Column(name = "type")
+	@NotBlank(message = "Seed type must be inserted")
 	private String typeOfSeeds;
 	
 	@Column(name = "description")
 	private String seedsDescription;
 	
 	@Column(name = "stock")
+	@Min(value = 50)
 	private int seedsStock;
 	
 	@Column(name = "scost")
 	private double seedsCost;
 	
 	@Column(name = "quantity")
+	@Min(value = 10)
 	private int seedsPerPacket;
 	
 }

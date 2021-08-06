@@ -111,23 +111,24 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/orders")
-	public void fetchOrders(){
+	public ResponseEntity<?> fetchOrders(){
 		if(validUser == 1) {
 			Customer customer = service.viewCustomer(validId);		
 		    List<Orders> order = customer.getOrders();
 		    List<String> orderlist = new ArrayList<>();
+		    int i = 1;
 		    for(Orders obj : order) {
-		    	orderlist.add("..........................Order Details......................... \n" +
-                               "Booking id : " + obj.getBookingOrderId() + "\r\n" +
-                               "Order date : " + obj.getOrderDate() + "\r\n" +
-                               "Transaction mode : " + obj.getTransactionMode() + "\r\n" +
-                               "Quantity ordered : " + obj.getQuantity() + "\r\n" +
-                               "Total Cost : " + obj.getTotalCost());
+		    	orderlist.add( "Serial : " + i +
+		    			 	   ", Booking id : " + obj.getBookingOrderId() + 
+                               ", Order date : " + obj.getOrderDate() + 
+                               ", Transaction mode : " + obj.getTransactionMode() + 
+                               ", Quantity ordered : " + obj.getQuantity() + 
+                               ", Total Cost : " + obj.getTotalCost());
+		    	i++;
 		    }
-		    for(int i = 0 ; i < orderlist.size() ; i++)
-		    	ResponseEntity.ok(orderlist.get(i)); 
+		    return ResponseEntity.ok(orderlist); 
 		}else
-			ResponseEntity.ok("Not Logged In");
+			return ResponseEntity.ok("Not Logged In");
 	}
 	
 	@PatchMapping(path = "/customer")

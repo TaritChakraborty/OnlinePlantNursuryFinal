@@ -5,7 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -38,6 +40,7 @@ public class Plant {
 	private String plantSpread;
 	
 	@Column(name = "plantname")
+	@NotBlank(message = "Plant name is mandatory")
 	private String commonName;
 	
 	@Column(name = "btime")
@@ -52,12 +55,14 @@ public class Plant {
 	private String temparature;
 	
 	@Column(name = "planttype")
+	@NotBlank(message = "Plant type is mandatory")
 	private String typeOfPlant;
 	
 	@Column(name = "description")
 	private String plantDescription;
 
 	@Column(name = "plantstock")
+	@Min(value = 50)
 	private int plantsStock;
 	
 	@Column(name = "plantcost")

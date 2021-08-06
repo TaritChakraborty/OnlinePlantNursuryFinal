@@ -1,7 +1,6 @@
 package com.cg.onlineplantnursery.Entity;
 
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,10 +12,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-
+import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -52,7 +50,7 @@ public class Customer {
 	
 	@Column(unique = true, updatable = false)
 	@NotBlank(message = "Username is mandatory")
-	@Min(value = 3, message = "Username must contain 3 characters.")
+	@Size(min = 3, message = "Username must contain 3 characters.")
 	private String username; 
 	
 	@NotBlank(message = "Password is mandatory")
