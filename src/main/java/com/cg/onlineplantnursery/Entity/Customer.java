@@ -54,7 +54,7 @@ public class Customer {
 	private String username; 
 	
 	@NotBlank(message = "Password is mandatory")
-	@Pattern(regexp="^[a-zA-Z0-9]{6,}", message="Password must contain a lowercase character, "
+	@Pattern(regexp="\"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$\"", message="Password must contain a lowercase character, "
 			                                     + "a uppercase character and a digit, minimum length must be 6 characters")  
 	private String password;
 	
