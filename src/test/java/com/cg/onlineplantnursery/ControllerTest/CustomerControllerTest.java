@@ -16,49 +16,49 @@ import com.cg.onlineplantnursery.Service.CustomerServiceImpl;
 
 @WebMvcTest(CustomerController.class)
 public class CustomerControllerTest {
-	
+
 	@Autowired
 	private MockMvc mvc;
-	
+
 	@MockBean
 	private CustomerServiceImpl customerService;
-	
+
 	private Customer customer;
-	
+
 	@BeforeEach
 	void setup() {
-		
+
 		@SuppressWarnings("unused")
 		Customer customer = Customer.builder().customerId(1).customerName("Amit Roy").customerEmail("amtroy@gmail.com").
-				username("amtroy").password("amtroy123").build();
-		
+		username("amtroy").password("amtroy123").build();
+
 	}
-	
+
 	@Test(expected=NullPointerException.class)
 	public void updateCustomer() throws Exception {
 
 		Customer cust = Customer.builder().customerId(1).customerName("Amit Roy").customerEmail("amtroy@gmail.com").
 				username("amtroy").password("amtroy123").build();
-		
+
 		Mockito.when(customerService.updateCustomer(cust)).thenReturn(customer);
-		
+
 		mvc.perform(MockMvcRequestBuilders.put("/update")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("{\n"+"}"))
-				.andExpect(MockMvcResultMatchers
-						.status().isOk());
+		.andExpect(MockMvcResultMatchers
+				.status().isOk());
 	}
-	
+
 	@Test(expected=NullPointerException.class)
 	public void fetchCustomerById() throws Exception {
 		Mockito.when(customerService.viewCustomer(0))
 		.thenReturn(customer);
-		
-	mvc.perform(MockMvcRequestBuilders.get("/viewId/{customerId}")
-			.contentType(MediaType.APPLICATION_JSON))
-	.andExpect(MockMvcResultMatchers.status().isOk())
-	.andExpect(MockMvcResultMatchers.jsonPath("$.customerName")
-			.value(customer.getCustomerName()));
+
+		mvc.perform(MockMvcRequestBuilders.get("/viewId/{customerId}")
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.customerName")
+				.value(customer.getCustomerName()));
 	}
 }
 
