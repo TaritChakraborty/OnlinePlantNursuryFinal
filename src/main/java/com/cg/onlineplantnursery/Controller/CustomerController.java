@@ -24,6 +24,9 @@ import com.cg.onlineplantnursery.Entity.Orders;
 import com.cg.onlineplantnursery.Exception.OrderNotFoundException;
 import com.cg.onlineplantnursery.Service.CustomerServiceImpl;
 import com.cg.onlineplantnursery.Service.OrderServiceImpl;
+import com.cg.onlineplantnursery.Service.PlantServiceImpl;
+import com.cg.onlineplantnursery.Service.PlanterServiceImpl;
+import com.cg.onlineplantnursery.Service.SeedServiceImpl;
 
 @RestController
 @RequestMapping("/customer")
@@ -37,6 +40,15 @@ public class CustomerController {
 	
 	@Autowired
 	private OrderServiceImpl orderservice;
+	
+	@Autowired
+	private PlantServiceImpl plantservice;
+	
+	@Autowired
+	private SeedServiceImpl seedservice;
+	
+	@Autowired
+	private PlanterServiceImpl planterservice;
 	
 	@PostMapping("/customer")
 	public ResponseEntity<?> addCustomer(@Valid @RequestBody Customer customer) {
@@ -163,6 +175,33 @@ public class CustomerController {
 			return ResponseEntity.ok("Logged out...");		
 		}else
 			return ResponseEntity.ok("Not Logged In");
+	}
+	
+	/*.........................Plant.................................*/
+	@GetMapping("/plant")
+	public ResponseEntity<?> fetchAllOrders() {
+		if(validUser == 1) {
+			return ResponseEntity.ok(plantservice.viewAllPlants());
+		}else
+		return ResponseEntity.ok("Not Logged In");
+	}
+	
+	/*........................Planter................................*/
+	@GetMapping("/planter")
+	public ResponseEntity<?> viewAllPlanters() {
+		if(validUser == 1) {
+			return ResponseEntity.ok(planterservice.viewAllPlanters());
+		}else
+		return ResponseEntity.ok("Not Logged In");
+	}
+	
+	/*.......................Seed...................................*/
+	@GetMapping("/seed")
+	public ResponseEntity<?> viewAllSeeds() {
+		if(validUser == 1) {			
+			return ResponseEntity.ok(seedservice.viewAllSeeds());
+		}else
+		return ResponseEntity.ok("Not Logged In");
 	}
 	
 }

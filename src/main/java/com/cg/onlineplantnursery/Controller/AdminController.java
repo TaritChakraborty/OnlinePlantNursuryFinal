@@ -1,6 +1,8 @@
 package com.cg.onlineplantnursery.Controller;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.cg.onlineplantnursery.Entity.Admin;
 import com.cg.onlineplantnursery.Entity.Customer;
+import com.cg.onlineplantnursery.Entity.Orders;
 import com.cg.onlineplantnursery.Entity.Plant;
 import com.cg.onlineplantnursery.Entity.Planter;
 import com.cg.onlineplantnursery.Entity.Seed;
@@ -103,6 +106,27 @@ public class AdminController {
 			return ResponseEntity.ok(customerservice.deleteCustomer(customerId));
 		}else
 		return ResponseEntity.ok("Not Logged In");
+	}
+	
+	@GetMapping("/orders/{id}")
+	public ResponseEntity<?> fetchOrders(@PathVariable("id") Integer customerId){
+		if(validAdmin == 1) {
+			Customer customer = customerservice.viewCustomer(customerId);		
+		    List<Orders> order = customer.getOrders();
+		    List<String> orderlist = new ArrayList<>();
+		    int i = 1;
+		    for(Orders obj : order) {
+		    	orderlist.add( "Serial : " + i +
+		    			 	   ", Booking id : " + obj.getBookingOrderId() + 
+                               ", Order date : " + obj.getOrderDate() + 
+                               ", Transaction mode : " + obj.getTransactionMode() + 
+                               ", Quantity ordered : " + obj.getQuantity() + 
+                               ", Total Cost : " + obj.getTotalCost());
+		    	i++;
+		    }
+		    return ResponseEntity.ok(orderlist); 
+		}else
+			return ResponseEntity.ok("Not Logged In");
 	}
 	
 	/*..........................For Plants................................*/
